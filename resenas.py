@@ -1,30 +1,38 @@
 ## Importamos las librerías.
 import steamreviews
-import json
 
-#* Este es el juego de Miku: 2089350
+## Importamos los archivos.
+from common.utilities import diccionarios
+from common.config import steamReviewsAPIConfiguration as steamReviewsConfig
+from common.config import steamAPIConfiguration as steamConfig
+
+# * Este es el juego de Hatsune Miku Logic Paint S: 2089350
 miku = 2089350
 
 #! Lista final
 reviews = []
 
-# Configura la API de Steam
-request_params = {
-    'filter': 'recent',  # Ordena las reseñas por fecha
-    'language': 'all',   # Obtiene reseñas en todos los idiomas
-    'day_range': '30',   # Obtiene reseñas de los últimos 30 días
-    'num_per_page': 5, # Obtiene 100 reseñas por solicitud
-}
+# * Descargarmos las reviews que tiene
+review_dict = steamreviews.download_reviews_for_app_id(
+    miku, chosen_request_params=steamReviewsConfig.filtros
+)
+reviews_miku = review_dict[0]["reviews"]
 
-#* Descargarmos las reviews que tiene
-review_dict = steamreviews.download_reviews_for_app_id(miku, chosen_request_params=request_params)
-reviews_miku = review_dict[0]['reviews']
+# * Vamos ahora a mostrar únicamente la última reseña, para ver que tiene,
+# * Para ello tenemos que primero transformar a lista y luego seleccionar cualquiera
+# * Voy a sacar la entrada número 39, pero la verdad sirve cualquiera.
+reviews_miku_list = list(review_dict[0]["reviews"].values())
+review_aleatoria = reviews_miku_list[200]
+diccionarios.mostrar_diccionario_como_json(review_aleatoria)
 
-# Iterar a través de las claves y valores del diccionario
-for value in reviews_miku.values():
-    playtime_forever = value['author']['playtime_forever']
-    review = value['review']
-    
-    print(f"Playtime forever: {playtime_forever}")
-    print(f"Review: {review}\n")
+# * Voy a buscar por mi steam id
+review_willy = diccionarios.crear_compresion_de_diccionario_para_review(
+    reviews_miku, True, "steamid", steamConfig.STEAM_ID
+)
 
+# * Vamos a ver si existe el comentario que hice antes
+review = review_willy["review"]
+steam_id = review_willy["author"]["steamid"]
+
+print(f"Steam ID: {steam_id}")
+print(f"Review: {review}\n")
