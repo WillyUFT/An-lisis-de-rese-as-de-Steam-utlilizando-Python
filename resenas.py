@@ -3,6 +3,7 @@ import steamreviews
 
 ## Importamos los archivos.
 from common.utilities import diccionarios
+from common.utilities import tiempo
 from common.config import steamReviewsAPIConfiguration as steamReviewsConfig
 from common.config import steamAPIConfiguration as steamConfig
 
@@ -16,6 +17,9 @@ reviews = []
 review_dict = steamreviews.download_reviews_for_app_id(
     miku, chosen_request_params=steamReviewsConfig.filtros
 )
+
+print("\n\n\n")
+
 reviews_miku = review_dict[0]["reviews"]
 
 # * Vamos ahora a mostrar únicamente la última reseña, para ver que tiene,
@@ -30,9 +34,15 @@ review_willy = diccionarios.crear_compresion_de_diccionario_para_review(
     reviews_miku, True, "steamid", steamConfig.STEAM_ID
 )
 
-# * Vamos a ver si existe el comentario que hice antes
-review = review_willy["review"]
-steam_id = review_willy["author"]["steamid"]
+print("\n\n\n")
 
-print(f"Steam ID: {steam_id}")
-print(f"Review: {review}\n")
+# * Vamos a buscar los valores de los tiempos jugados y la review
+for reviewId, sub_dict in review_willy.items():
+    review = sub_dict.get('review', '')
+    playtime_forever = sub_dict['author'].get('playtime_forever', 0)
+    playtime_at_review = sub_dict['author'].get('playtime_at_review', 0)
+    
+    print(f"Review: {review}")
+    print(f"Play time forever: {tiempo.minutos_a_hhmm(playtime_forever)}")
+    print(f"Play time at review: {tiempo.minutos_a_hhmm(playtime_at_review)}")
+    
