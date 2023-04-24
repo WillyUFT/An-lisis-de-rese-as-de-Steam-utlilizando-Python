@@ -1,48 +1,40 @@
-## Importamos las librerías.
-import steamreviews
+# ! Este archivo recogerá las reviews de Steam de juegos Metroidvania
 
-## Importamos los archivos.
-from common.utilities import diccionarios
-from common.utilities import tiempo
-from common.config import steamReviewsAPIConfiguration as steamReviewsConfig
-from common.config import steamAPIConfiguration as steamConfig
+# ^^ Para esta sección se utilizan los datos de SteamSpy,
+# ^^ el autor autoriza el uso de su API para esta tesis.
 
-# * Este es el juego de Hatsune Miku Logic Paint S: 2089350
-miku = 2089350
+# ? Importamos los paquetes importantes.
+import requests
+import itertools
 
-#! Lista final
-reviews = []
+# * Creamos la url que sirve para ir a buscar los juegos por tags,
+# * El parámetro puede ser cambiado por otro, pero para este caso se
+# * necesita "Metroidvania".
+url = "http://www.steamspy.com/api.php?request=tag&tag=Metroidvania"
 
-# * Descargarmos las reviews que tiene
-review_dict = steamreviews.download_reviews_for_app_id(
-    miku, chosen_request_params=steamReviewsConfig.filtros
-)
+# * Acá se trae la data.
+response = requests.get(url)
+data = response.json()
 
-print("\n\n\n")
+# ? La respuesta trae demasiados juegos, no es necesario tener todos
+# ? por lo que se limitará la lista de juegos a solo 500.
+data = dict(itertools.islice(data.items(), 500))
 
-reviews_miku = review_dict[0]["reviews"]
+# * Se crea un diccionario vacío con el propósito de guardar únicamente
+# * el título del juego y el AppID.
+juegos = {}
 
-# * Vamos ahora a mostrar únicamente la última reseña, para ver que tiene,
-# * Para ello tenemos que primero transformar a lista y luego seleccionar cualquiera
-# * Voy a sacar la entrada número 39, pero la verdad sirve cualquiera.
-reviews_miku_list = list(review_dict[0]["reviews"].values())
-review_aleatoria = reviews_miku_list[200]
-diccionarios.mostrar_diccionario_como_json(review_aleatoria)
+# * Para llenarlo se necesitan dos listas
+juegos_id = []
+juegos_nombre = []
 
-# * Voy a buscar por mi steam id
-review_willy = diccionarios.crear_compresion_de_diccionario_para_review(
-    reviews_miku, True, "steamid", steamConfig.STEAM_ID
-)
-
-print("\n\n\n")
-
-# * Vamos a buscar los valores de los tiempos jugados y la review
-for reviewId, sub_dict in review_willy.items():
-    review = sub_dict.get('review', '')
-    playtime_forever = sub_dict['author'].get('playtime_forever', 0)
-    playtime_at_review = sub_dict['author'].get('playtime_at_review', 0)
+# & Se llenan las listas con los nombres y los id de los juegos.
+for app_id, app_info in data.items():
+    juegos_id.append(app_id)
+    juegos_nombre.append(app_info['name'])
     
-    print(f"Review: {review}")
-    print(f"Play time forever: {tiempo.minutos_a_hhmm(playtime_forever)}")
-    print(f"Play time at review: {tiempo.minutos_a_hhmm(playtime_at_review)}")
-    
+# & Se arma el diccionario
+for juego_id, juego_nombre in zip(juegos_id, juegos_nombre):
+    juegos[juego_id] = juego_nombre
+
+print(juegos)
