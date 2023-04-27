@@ -6,6 +6,8 @@
 # ? Importamos los paquetes importantes.
 import requests
 import itertools
+from common.utilities import diccionario
+
 
 # * Creamos la url que sirve para ir a buscar los juegos por tags,
 # * El parámetro puede ser cambiado por otro, pero para este caso se

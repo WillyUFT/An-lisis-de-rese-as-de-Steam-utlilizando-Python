@@ -7,8 +7,8 @@ import steamreviews
 ## Importamos los archivos.
 from common.utilities import diccionarios
 from common.utilities import tiempo
-from common.config import steamReviewsAPIConfiguration as steamReviewsConfig
-from common.config import steamAPIConfiguration as steamConfig
+from common.config.steam import steamReviewsAPIConfiguration as steamReviewsConfig
+from common.config.steam import steamAPIConfiguration as steamConfig
 
 
 # * Este es el juego de Hatsune Miku Logic Paint S: 2089350
@@ -25,8 +25,9 @@ reviews_miku = review_dict[0]["reviews"]
 
 # * Vamos ahora a mostrar únicamente la última reseña, para ver que tiene,
 # * Para ello tenemos que primero transformar a lista y luego seleccionar cualquiera
-# * Voy a sacar la entrada número 39, pero la verdad sirve cualquiera.
+# * Voy a sacar la entrada número 20, pero la verdad sirve cualquiera.
 reviews_miku_list = list(review_dict[0]["reviews"].values())
+print(len(reviews_miku_list))
 review_aleatoria = reviews_miku_list[200]
 diccionarios.mostrar_diccionario_como_json(review_aleatoria)
 
