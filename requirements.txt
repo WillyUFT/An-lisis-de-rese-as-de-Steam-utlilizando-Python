@@ -1,0 +1,6 @@
+tweepy
+emoji 
+tweepy
+pandas
+steamreviews
+openpyxl

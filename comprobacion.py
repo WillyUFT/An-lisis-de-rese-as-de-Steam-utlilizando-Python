@@ -3,11 +3,11 @@
 
 ## Importamos las librerías.
 import steamreviews
+import pandas
 
 ## Importamos los archivos.
 from common.utilities import diccionarios
 from common.utilities import tiempo
-from common.config.steam import steamReviewsAPIConfiguration as steamReviewsConfig
 from common.config.steam import steamAPIConfiguration as steamConfig
 
 
@@ -16,8 +16,7 @@ miku = 2089350
 
 # * Descargarmos las reviews que tiene
 review_dict = steamreviews.download_reviews_for_app_id(
-    miku, chosen_request_params=steamReviewsConfig.filtros
-)
+    miku)
 
 print("\n\n\n")
 
