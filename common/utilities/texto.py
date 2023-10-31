@@ -34,6 +34,6 @@ def limpiar_tweets(tweet: str) -> str:
     tweet_limpio = tweet_limpio.lower()
     
     # Eliminamos los emojis
-    tweet_limpio = emoji.get_emoji_regexp().sub("", tweet_limpio)
+    # tweet_limpio = emoji.get_emoji_regexp().sub("", tweet_limpio)
 
     return tweet_limpio

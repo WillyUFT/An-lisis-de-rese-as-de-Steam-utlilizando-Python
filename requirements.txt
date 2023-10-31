@@ -4,3 +4,4 @@ tweepy
 pandas
 steamreviews
 openpyxl
+wordcloud
