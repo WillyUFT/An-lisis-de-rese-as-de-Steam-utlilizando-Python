@@ -8,8 +8,7 @@ from common.utilities import texto as txt
 df = pd.read_excel('reviews hololive.xlsx')  # Lee el Excel en un DataFrame
 
 # Combina todas las palabras en una gran cadena de texto
-# texto = ' '.join(df['review'].astype(str))
-texto = "maraca zorra nacho manual"
+texto = ' '.join(df['review'].astype(str))
 texto = txt.limpiar_tweets(texto).replace("game", "")
 
 # Crea el Word Cloud

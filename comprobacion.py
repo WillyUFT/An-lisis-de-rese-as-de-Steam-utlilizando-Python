@@ -3,7 +3,7 @@
 
 ## Importamos las librerías.
 import steamreviews
-import pandas
+import json
 
 ## Importamos los archivos.
 from common.utilities import diccionarios
@@ -20,7 +20,12 @@ review_dict = steamreviews.download_reviews_for_app_id(
 
 print("\n\n\n")
 
+print(review_dict);
+
+
 reviews_miku = review_dict[0]["reviews"]
+
+print(json.dumps(reviews_miku, indent=4))
 
 # * Vamos ahora a mostrar únicamente la última reseña, para ver que tiene,
 # * Para ello tenemos que primero transformar a lista y luego seleccionar cualquiera
