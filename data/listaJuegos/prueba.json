@@ -17,5 +17,24 @@
         "initialprice": "0",
         "discount": "0",
         "ccu": 441
+    },
+    "333600": {
+        "appid": 333600,
+        "name": "NEKOPARA Vol. 1",
+        "developer": "NEKO WORKs",
+        "publisher": "Sekai Project",
+        "score_rank": "",
+        "positive": 25215,
+        "negative": 1228,
+        "userscore": 0,
+        "owners": "500,000 .. 1,000,000",
+        "average_forever": 0,
+        "average_2weeks": 0,
+        "median_forever": 0,
+        "median_2weeks": 0,
+        "price": "999",
+        "initialprice": "999",
+        "discount": "0",
+        "ccu": 34
     }
 }

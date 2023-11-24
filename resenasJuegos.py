@@ -6,17 +6,14 @@
 import pandas
 import steamreviews
 import json
+import time
+from common.utilities import texto as texto;
 
 # * ========================================================================= #
 # *                                 VARIABLES                                 #
 # * ========================================================================= #
 
 listaJuegos = [
-    "prueba",
-    "juegos_cute",
-    "juegos_anime",
-    "juegos_indie",
-    "juegos_metroidvania",
     "juegos_female+protagonist",
 ]
 
@@ -35,8 +32,8 @@ for nombrejuego in listaJuegos:
 
     juegos_df = pandas.DataFrame.from_dict(juegos_data, orient="index")
     juegos_a_buscar = juegos_df["appid"].tolist()
-
-    print("Vamos a bsucar los juegos de este json " + nombrejuego)
+    
+    print("Vamos a buscar los juegos de este json " + nombrejuego)
 
     for app_id in juegos_a_buscar:
         review_dict, query_count = steamreviews.download_reviews_for_app_id(
@@ -44,18 +41,17 @@ for nombrejuego in listaJuegos:
             chosen_request_params=request_params,
             limite_resenas=limite_de_resenas,
         )
-        reseñas_temporales = []
-
-        # * Itera sobre las reseñas descargadas y detente si alcanzamos el límite
+    
         for review_id in review_dict["reviews"]:
-            if len(reseñas_temporales) < limite_de_resenas:
-                review_data = review_dict["reviews"][review_id]
-                reseñas_temporales.append(review_data)
-            else:
-                # * Nos detenemos cuando llegamos al límite
-                break
+            review_data = review_dict["reviews"][review_id]
+            review_text = review_data.get("review", "")
+            if texto.es_ascii(review_text):
+                reseñas.append(review_data);    
+        
+        time.sleep(5)
+            
+        print("Total de reseñas para el juego con app_id {}: {}".format(app_id, len(reseñas)))
 
-        reseñas.extend(reseñas_temporales)
-
-        reseñas_df = pandas.DataFrame(reseñas)
-        reseñas_df.to_excel(nombrejuego + ".xlsx", index=False)
+    reseñas_df = pandas.DataFrame(reseñas)
+    reseñas_df.to_excel(nombrejuego + ".xlsx", index=False)
+    reseñas = []

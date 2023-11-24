@@ -22,6 +22,10 @@ data_hololive = [
     {'app_id':'2494480', 'app_name':'Truth of Beauty Witch -Marine\'s treasure ship-'}
 ]
 
+request_params = {"language": "english,spanish", "num_per_page": "100"}  # Máximo es 100
+limite_de_resenas = 100000
+
+
 juegos_hololive = pandas.DataFrame(data_hololive)
 
 # & Primero creamos una lista vacía en la que irán todos los data frames de las reseñas
@@ -30,7 +34,11 @@ reseñas_hololive = [] # Reseñas para hololive
 # * Acá obtenemos recorremos el data frame y buscamos las reseñas de hololive
 for index, row in juegos_hololive.iterrows():
     # ? Buscamos las reseñas del juego que se está iterando ahora mismo
-    review_dict = steamreviews.download_reviews_for_app_id(int(row["app_id"]))
+    review_dict = steamreviews.download_reviews_for_app_id(
+            int(row["app_id"]),
+            chosen_request_params=request_params,
+            limite_resenas=limite_de_resenas,
+        )
 
     # * Lamentablemente, para ir añadiendo reseñas a la lista tenemos que hacer un for dentro de otro, perdóname Hidalgo
     for review_id in review_dict[0]["reviews"]:
@@ -56,5 +64,5 @@ for index, row in juegos_hololive.iterrows():
 reseñas_df = pandas.DataFrame(reseñas_hololive)
 
 # * Guardar el DataFrame como un archivo de Excel, esto porque el programa se demora demasiado, necesitamos los datos más a la mano
-reseñas_df.to_excel("reviews hololive.xlsx", index=False)
+reseñas_df.to_excel("juegos_hololive.xlsx", index=False)
 

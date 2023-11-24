@@ -21,10 +21,8 @@ juegosABuscar: list = [
     "metroidvania",
     "indie",
     "anime",
-    "cute",
     "action",
     "2D",
-    "pixel+graphics",
     "female+protagonist",
 ]
 
