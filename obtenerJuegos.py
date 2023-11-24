@@ -28,7 +28,7 @@ juegosABuscar: list = [
     "female+protagonist",
 ]
 
-buscar: bool = False
+buscar: bool = True
 
 # * ---------------------------------------------------------------------------- * #
 # *                                    CÓDIGO                                    * #
