@@ -88,11 +88,11 @@ def lematizar_texto(texto: str) -> str:
 
 
 def limpieza_total_text(texto: str) -> str:
-    print("\n\nTEXTO ANTIGUO:\n\n" + texto)
+    # print("\n\nTEXTO ANTIGUO:\n\n" + texto)
     texto_limpio = limpiar_tweets(texto)
     texto_limpio = eliminar_stop_words(texto_limpio)
     texto_limpio = lematizar_texto(texto_limpio)
-    print("\n\nTEXTO LIMPIO:\n\n" + texto_limpio)
+    # print("\n\nTEXTO LIMPIO:\n\n" + texto_limpio)
     return texto_limpio
     
 

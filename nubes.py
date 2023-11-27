@@ -7,8 +7,8 @@ from common.utilities import texto as txt
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 
-# lista_resenas = ["anime", "cute", "female+protagonist","indie","metridvania"]
-lista_resenas = ["prueba"]
+lista_resenas = ["metroidvania"]
+# lista_resenas = ["prueba"]
 
 # * Preguntamos que xlsx queremos revisar, para no hacer un for gigante
 tag = input("Inserte el tag para limpiar los datos:  ")
